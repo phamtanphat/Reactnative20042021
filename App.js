@@ -2,20 +2,34 @@
 import React, {Component} from 'react';
 import {
   Text,
-  View,
-  Dimensions,
-  Platform,
   SafeAreaView,
   StyleSheet,
+  View,
+  Button,
+  TouchableOpacity,
 } from 'react-native';
 
 export default class App extends Component {
   render() {
-    const word = {en: 'One', vn: 'Một'};
+    const word = {en: 'One', vn: 'Một', isMemorized: true};
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.textStyleEn}>{word.en}</Text>
-        <Text style={styles.textStyleVn}>{word.vn}</Text>
+        <View style={styles.containerText}>
+          <Text style={styles.textStyleEn}>{word.en}</Text>
+          <Text style={styles.textStyleVn}>
+            {word.isMemorized ? '----' : word.vn}
+          </Text>
+        </View>
+        <View style={styles.containerTouchable}>
+          <TouchableOpacity
+            style={{padding: 10, backgroundColor: 'green', borderRadius: 5}}>
+            <Text style={{fontSize: 14, color: 'white'}}>Forgot</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{padding: 10, backgroundColor: 'yellow', borderRadius: 5}}>
+            <Text style={{fontSize: 14, color: 'black'}}>Remove</Text>
+          </TouchableOpacity>
+        </View>
       </SafeAreaView>
     );
   }
@@ -24,6 +38,14 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
+  },
+  containerText: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  containerTouchable: {
+    marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'space-evenly',
   },
