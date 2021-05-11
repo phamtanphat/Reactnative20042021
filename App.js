@@ -10,32 +10,43 @@ import {
 } from 'react-native';
 
 export default class App extends Component {
+  renderWord = (word) => {
+    return (
+      <View style={styles.containerWord}>
+        <View style={styles.containerText}>
+          <Text style={styles.textStyleEn}>{word.en}</Text>
+          <Text style={styles.textStyleVn}>
+            {word.isMemorized ? '----' : word.vn}
+          </Text>
+        </View>
+        <View style={styles.containerTouchable}>
+          <TouchableOpacity
+            style={{
+              ...styles.touchForgot,
+              backgroundColor: word.isMemorized ? 'green' : 'red',
+            }}>
+            <Text style={styles.textTouchForgot}>
+              {word.isMemorized ? 'Forgot' : 'Memorized'}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.touchRemove}>
+            <Text style={styles.textTouchRemove}>Remove</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  };
   render() {
-    const word = {en: 'One', vn: 'Một', isMemorized: false};
+    const words = [
+      {id: 1, en: 'One', vn: 'Một', isMemorized: false},
+      {id: 2, en: 'Two', vn: 'Hai', isMemorized: false},
+      {id: 3, en: 'Three', vn: 'Ba', isMemorized: true},
+      {id: 4, en: 'Four', vn: 'Bốn', isMemorized: true},
+      {id: 5, en: 'Five', vn: 'Năm', isMemorized: false},
+    ];
     return (
       <SafeAreaView style={styles.container}>
-        <View style={styles.containerWord}>
-          <View style={styles.containerText}>
-            <Text style={styles.textStyleEn}>{word.en}</Text>
-            <Text style={styles.textStyleVn}>
-              {word.isMemorized ? '----' : word.vn}
-            </Text>
-          </View>
-          <View style={styles.containerTouchable}>
-            <TouchableOpacity
-              style={{
-                ...styles.touchForgot,
-                backgroundColor: word.isMemorized ? 'green' : 'red',
-              }}>
-              <Text style={styles.textTouchForgot}>
-                {word.isMemorized ? 'Forgot' : 'Memorized'}
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.touchRemove}>
-              <Text style={styles.textTouchRemove}>Remove</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        {words.map((word) => this.renderWord(word))}
       </SafeAreaView>
     );
   }
@@ -49,6 +60,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   containerWord: {
+    marginTop: '2%',
     justifyContent: 'center',
     height: '13%',
     flexDirection: 'column',
