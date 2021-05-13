@@ -32,6 +32,15 @@ export default class Main extends Component {
         </View>
         <View style={styles.containerTouchable}>
           <TouchableOpacity
+            onPress={() => {
+              const newWords = this.state.words.map((item) => {
+                if (item.id === word.id) {
+                  return {...item, isMemorized: !item.isMemorized};
+                }
+                return item;
+              });
+              this.setState({words: newWords});
+            }}
             style={{
               ...styles.touchForgot,
               backgroundColor: word.isMemorized ? 'green' : 'red',
