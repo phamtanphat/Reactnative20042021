@@ -49,7 +49,17 @@ export default class Main extends Component {
               {word.isMemorized ? 'Forgot' : 'Memorized'}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.touchRemove}>
+          <TouchableOpacity
+            onPress={() => {
+              const newWords = this.state.words.filter((item) => {
+                if (item.id === word.id) {
+                  return false;
+                }
+                return true;
+              });
+              this.setState({words: newWords});
+            }}
+            style={styles.touchRemove}>
             <Text style={styles.textTouchRemove}>Remove</Text>
           </TouchableOpacity>
         </View>
