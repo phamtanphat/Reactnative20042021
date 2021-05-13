@@ -24,16 +24,22 @@ export default class Box extends Component {
           }}>
           <TouchableOpacity
             onPress={() => {
-              this.setState({count : this.state.count + 1});
+              this.setState({count: this.state.count + 1});
             }}
             style={{padding: 10, backgroundColor: 'green', borderRadius: 5}}>
             <Text style={{fontSize: 20, color: 'white'}}>Increment</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={() => {
+              this.setState({count: this.state.count - 1});
+            }}
             style={{padding: 10, backgroundColor: 'red', borderRadius: 5}}>
             <Text style={{fontSize: 20, color: 'white'}}>Decrement</Text>
           </TouchableOpacity>
           <TouchableOpacity
+            onPress={() => {
+              this.setState({count: 0});
+            }}
             style={{padding: 10, backgroundColor: 'yellow', borderRadius: 5}}>
             <Text style={{fontSize: 20, color: 'gray'}}>Reset</Text>
           </TouchableOpacity>
