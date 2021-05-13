@@ -45,7 +45,9 @@ export default class Main extends Component {
     ];
     return (
       <SafeAreaView style={styles.container}>
-        {words.map((word) => this.renderWord(word))}
+        {words.map((word) => {
+          return this.renderWord(word);
+        })}
       </SafeAreaView>
     );
   }
@@ -105,3 +107,4 @@ const styles = StyleSheet.create({
     color: 'black',
   },
 });
+
