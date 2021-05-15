@@ -6,6 +6,7 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 
 export default class Main extends Component {
@@ -19,6 +20,9 @@ export default class Main extends Component {
         {id: 4, en: 'Four', vn: 'Bốn', isMemorized: true},
         {id: 5, en: 'Five', vn: 'Năm', isMemorized: false},
       ],
+      shouldShowForm: false,
+      txtEn: '',
+      txtVn: '',
     };
   }
   renderWord = (word) => {
@@ -66,9 +70,55 @@ export default class Main extends Component {
       </View>
     );
   };
+  toggleForm = () => {
+    this.setState({ shouldShowForm: !this.state.shouldShowForm });
+  };
+  renderForm = () => {
+    if (this.state.shouldShowForm) {
+      return (
+        <View>
+          <View style={styles.containerTextInput}>
+            <TextInput
+              placeholder="English"
+              style={styles.textInput}
+              onChangeText={(text) => {
+                this.state.txtEn = text;
+              }}
+            />
+            <TextInput
+              onChangeText={(text) => {
+                this.state.txtVn = text;
+              }}
+              placeholder="Vietnamese"
+              style={styles.textInput}
+            />
+          </View>
+          <View style={styles.containerTouchableForm}>
+            <TouchableOpacity style={styles.touchableAddword}>
+              <Text style={styles.textTouchable}>Add word</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={this.toggleForm}
+              style={styles.touchableCancel}>
+              <Text style={styles.textTouchable}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+          onPress={this.toggleForm}
+          style={styles.buttonOpenForm}>
+          <Text style={styles.textOpenForm}>+</Text>
+        </TouchableOpacity>
+      );
+    }
+  };
   render() {
     return (
       <SafeAreaView style={styles.container}>
+        {this.renderForm()}
         {this.state.words.map((word) => {
           return this.renderWord(word);
         })}
@@ -129,5 +179,49 @@ const styles = StyleSheet.create({
   textTouchRemove: {
     fontSize: 14,
     color: 'black',
+  },
+  containerTextInput: {
+    width: '100%',
+    height: 150,
+    justifyContent: 'space-evenly',
+  },
+  textInput: {
+    borderWidth: 1,
+    height: 60,
+    fontSize: 20,
+    paddingHorizontal: 10,
+  },
+  touchableAddword: {
+    backgroundColor: '#218838',
+    padding: 15,
+    borderRadius: 10,
+  },
+  textTouchable: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: '500',
+  },
+  touchableCancel: {
+    backgroundColor: 'red',
+    padding: 15,
+    borderRadius: 10,
+  },
+  buttonOpenForm: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#45B157',
+    borderRadius: 5,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  textOpenForm: {
+    color: 'white',
+    fontSize: 30,
+  },
+  containerTouchableForm: {
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+    marginBottom: 10,
   },
 });
