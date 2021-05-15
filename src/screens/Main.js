@@ -71,7 +71,27 @@ export default class Main extends Component {
     );
   };
   toggleForm = () => {
-    this.setState({ shouldShowForm: !this.state.shouldShowForm });
+    this.setState({shouldShowForm: !this.state.shouldShowForm});
+  };
+  addWord = () => {
+    const {txtEn, txtVn} = this.state;
+    if (txtEn.length <= 0 || txtVn.length <= 0) {
+      alert('Bạn chưa nhập đủ thông tin');
+      return;
+    }
+    const newWord = {
+      id: Math.random(),
+      en: txtEn,
+      vn: txtVn,
+      isMemorized: false,
+    };
+    const newWords = this.state.words.map((word) => {
+      return {...word};
+    });
+    newWords.push(newWord);
+    this.txtEnRef.clear();
+    this.txtVnRef.clear();
+    this.setState({words: newWords, txtEn: '', txtVn: ''});
   };
   renderForm = () => {
     if (this.state.shouldShowForm) {
@@ -79,6 +99,7 @@ export default class Main extends Component {
         <View>
           <View style={styles.containerTextInput}>
             <TextInput
+              ref={(refs) => (this.txtEnRef = refs)}
               placeholder="English"
               style={styles.textInput}
               onChangeText={(text) => {
@@ -86,6 +107,7 @@ export default class Main extends Component {
               }}
             />
             <TextInput
+              ref={(refs) => (this.txtVnRef = refs)}
               onChangeText={(text) => {
                 this.state.txtVn = text;
               }}
@@ -94,7 +116,9 @@ export default class Main extends Component {
             />
           </View>
           <View style={styles.containerTouchableForm}>
-            <TouchableOpacity style={styles.touchableAddword}>
+            <TouchableOpacity
+              onPress={this.addWord}
+              style={styles.touchableAddword}>
               <Text style={styles.textTouchable}>Add word</Text>
             </TouchableOpacity>
             <TouchableOpacity
