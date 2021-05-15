@@ -9,26 +9,40 @@ import {
 } from 'react-native';
 
 export default class Form extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      shouldShowForm: true,
+    };
+  }
+  renderForm = () => {
+    if (this.state.shouldShowForm) {
+      return (
+        <View>
+          <View style={styles.containerTextInput}>
+            <TextInput placeholder="English" style={styles.textInput} />
+            <TextInput placeholder="Vietnamese" style={styles.textInput} />
+          </View>
+          <View style={styles.containerTouchable}>
+            <TouchableOpacity style={styles.touchableAddword}>
+              <Text style={styles.textTouchable}>Add word</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.touchableCancel}>
+              <Text style={styles.textTouchable}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      );
+    } else {
+      return (
+        <TouchableOpacity style={styles.buttonOpenForm}>
+          <Text style={styles.textOpenForm}>+</Text>
+        </TouchableOpacity>
+      );
+    }
+  };
   render() {
-    return (
-      //   <View>
-      //     <View style={styles.containerTextInput}>
-      //       <TextInput placeholder="English" style={styles.textInput} />
-      //       <TextInput placeholder="Vietnamese" style={styles.textInput} />
-      //     </View>
-      //     <View style={styles.containerTouchable}>
-      //       <TouchableOpacity style={styles.touchableAddword}>
-      //         <Text style={styles.textTouchable}>Add word</Text>
-      //       </TouchableOpacity>
-      //       <TouchableOpacity style={styles.touchableCancel}>
-      //         <Text style={styles.textTouchable}>Cancel</Text>
-      //       </TouchableOpacity>
-      //     </View>
-      //   </View>
-      <TouchableOpacity style={styles.buttonOpenForm}>
-        <Text style={styles.textOpenForm}>+</Text>
-      </TouchableOpacity>
-    );
+    return this.renderForm();
   }
 }
 
