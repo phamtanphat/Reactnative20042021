@@ -7,6 +7,7 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  Platform,
 } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
@@ -24,52 +25,60 @@ export default class Main extends Component {
       shouldShowForm: false,
       txtEn: '',
       txtVn: '',
+      filterMode: null,
     };
   }
   renderWord = (word) => {
-    return (
-      <View style={styles.containerWord} key={word.id}>
-        <View style={styles.containerText}>
-          <Text style={styles.textStyleEn}>{word.en}</Text>
-          <Text style={styles.textStyleVn}>
-            {word.isMemorized ? '----' : word.vn}
-          </Text>
-        </View>
-        <View style={styles.containerTouchable}>
-          <TouchableOpacity
-            onPress={() => {
-              const newWords = this.state.words.map((item) => {
-                if (item.id === word.id) {
-                  return {...item, isMemorized: !item.isMemorized};
-                }
-                return item;
-              });
-              this.setState({words: newWords});
-            }}
-            style={{
-              ...styles.touchForgot,
-              backgroundColor: word.isMemorized ? 'green' : 'red',
-            }}>
-            <Text style={styles.textTouchForgot}>
-              {word.isMemorized ? 'Forgot' : 'Memorized'}
+    const {filterMode} = this.state;
+    if (filterMode === 'Show_Forgot' && !word.isMemorized) {
+      return null;
+    } else if (filterMode === 'Show_Memorized' && word.isMemorized) {
+      return null;
+    } else {
+      return (
+        <View style={styles.containerWord} key={word.id}>
+          <View style={styles.containerText}>
+            <Text style={styles.textStyleEn}>{word.en}</Text>
+            <Text style={styles.textStyleVn}>
+              {word.isMemorized ? '----' : word.vn}
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              const newWords = this.state.words.filter((item) => {
-                if (item.id === word.id) {
-                  return false;
-                }
-                return true;
-              });
-              this.setState({words: newWords});
-            }}
-            style={styles.touchRemove}>
-            <Text style={styles.textTouchRemove}>Remove</Text>
-          </TouchableOpacity>
+          </View>
+          <View style={styles.containerTouchable}>
+            <TouchableOpacity
+              onPress={() => {
+                const newWords = this.state.words.map((item) => {
+                  if (item.id === word.id) {
+                    return {...item, isMemorized: !item.isMemorized};
+                  }
+                  return item;
+                });
+                this.setState({words: newWords});
+              }}
+              style={{
+                ...styles.touchForgot,
+                backgroundColor: word.isMemorized ? 'green' : 'red',
+              }}>
+              <Text style={styles.textTouchForgot}>
+                {word.isMemorized ? 'Forgot' : 'Memorized'}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                const newWords = this.state.words.filter((item) => {
+                  if (item.id === word.id) {
+                    return false;
+                  }
+                  return true;
+                });
+                this.setState({words: newWords});
+              }}
+              style={styles.touchRemove}>
+              <Text style={styles.textTouchRemove}>Remove</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    );
+      );
+    }
   };
   toggleForm = () => {
     this.setState({shouldShowForm: !this.state.shouldShowForm});
@@ -141,16 +150,19 @@ export default class Main extends Component {
     }
   };
   renderFilter = () => {
+    let selectValue = null;
     return (
       <View style={styles.containerPickerStyle}>
         <RNPickerSelect
           style={{inputAndroid: {color: 'black'}}}
           onValueChange={(value) => {
-            this.value = value;
-            console.log(this.value);
+            if (Platform.OS === 'android') {
+              this.setState({filterMode: value});
+            }
+            selectValue = value;
           }}
           onDonePress={() => {
-            alert(this.value);
+            this.setState({filterMode: selectValue});
           }}
           items={[
             {label: 'Show All', value: 'Show_All'},
