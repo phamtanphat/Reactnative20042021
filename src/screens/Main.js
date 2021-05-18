@@ -144,8 +144,10 @@ export default class Main extends Component {
     return (
       <View style={styles.containerPickerStyle}>
         <RNPickerSelect
+          style={{inputAndroid: {color: 'black'}}}
           onValueChange={(value) => {
             this.value = value;
+            console.log(this.value);
           }}
           onDonePress={() => {
             alert(this.value);
