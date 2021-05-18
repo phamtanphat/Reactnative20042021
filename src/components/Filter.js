@@ -4,9 +4,16 @@ import RNPickerSelect from 'react-native-picker-select';
 
 export default class Filter extends Component {
   render() {
+    let value = null;
     return (
       <View style={styles.containerPickerStyle}>
         <RNPickerSelect
+          onValueChange={(value) => {
+            this.value = value;
+          }}
+          onDonePress={() => {
+            alert(this.value);
+          }}
           items={[
             {label: 'Show All', value: 'Show_All'},
             {label: 'Show Forgot', value: 'Show_Forgot'},
