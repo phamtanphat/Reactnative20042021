@@ -17,7 +17,7 @@ export default class Box extends Component {
         <Text style={{alignSelf: 'center', fontSize: 30}}>
           Count : {this.state.count}
         </Text>
-        <Child />
+        <Child that={this} count={this.state.count} />
       </View>
     );
   }
