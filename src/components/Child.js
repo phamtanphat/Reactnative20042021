@@ -4,7 +4,6 @@ import {Text, View, TouchableOpacity} from 'react-native';
 
 export default class Child extends Component {
   render() {
-    alert(this.props.count);
     return (
       <View
         style={{
@@ -13,7 +12,7 @@ export default class Child extends Component {
           marginTop: 20,
         }}>
         <TouchableOpacity
-          onPress={() => this.props.that.setState({count: 11})}
+          onPress={() => this.props.onIncrement()}
           style={{padding: 10, backgroundColor: 'green', borderRadius: 5}}>
           <Text style={{fontSize: 20, color: 'white'}}>Increment</Text>
         </TouchableOpacity>
