@@ -7,16 +7,15 @@ import Form from './src/components/Form';
 import Filter from './src/components/Filter';
 import Word from './src/components/Word';
 
-
 export default class App extends Component {
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>
-        {/* <Main /> */}
+        <Main />
         {/* <Form/> */}
         {/* <Filter /> */}
         {/* <Word /> */}
-        <Box />
+        {/* <Box /> */}
       </SafeAreaView>
     );
   }

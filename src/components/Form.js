@@ -26,6 +26,7 @@ export default class Form extends Component {
         <View>
           <View style={styles.containerTextInput}>
             <TextInput
+              ref={(refs) => (this.txtEnRef = refs)}
               placeholder="English"
               style={styles.textInput}
               onChangeText={(text) => {
@@ -33,6 +34,7 @@ export default class Form extends Component {
               }}
             />
             <TextInput
+              ref={(refs) => (this.txtVnRef = refs)}
               onChangeText={(text) => {
                 this.state.txtVn = text;
               }}
@@ -40,8 +42,10 @@ export default class Form extends Component {
               style={styles.textInput}
             />
           </View>
-          <View style={styles.containerTouchable}>
-            <TouchableOpacity style={styles.touchableAddword}>
+          <View style={styles.containerTouchableForm}>
+            <TouchableOpacity
+              onPress={this.addWord}
+              style={styles.touchableAddword}>
               <Text style={styles.textTouchable}>Add word</Text>
             </TouchableOpacity>
             <TouchableOpacity
@@ -107,7 +111,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 30,
   },
-  containerTouchable: {
+  containerTouchableForm: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     marginBottom: 10,
