@@ -17,10 +17,12 @@ export default class Child extends Component {
           <Text style={{fontSize: 20, color: 'white'}}>Increment</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => this.props.onDecrement()}
           style={{padding: 10, backgroundColor: 'red', borderRadius: 5}}>
           <Text style={{fontSize: 20, color: 'white'}}>Decrement</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={() => this.props.onReset()}
           style={{padding: 10, backgroundColor: 'yellow', borderRadius: 5}}>
           <Text style={{fontSize: 20, color: 'gray'}}>Reset</Text>
         </TouchableOpacity>
