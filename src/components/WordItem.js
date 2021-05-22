@@ -4,11 +4,13 @@ import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 
 export default class WordItem extends Component {
   shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.word.isMemorized !== this.props.word.isMemorized) {
+    if (
+      nextProps.word.isMemorized !== this.props.word.isMemorized ||
+      nextProps.filterMode !== this.props.filterMode
+    ) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
   renderWord = (word) => {
     const {filterMode} = this.props;
@@ -55,7 +57,7 @@ export default class WordItem extends Component {
     }
   };
   render() {
-    console.log("item render");
+    console.log('item render');
     return this.renderWord(this.props.word);
   }
 }
