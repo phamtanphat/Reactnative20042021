@@ -3,6 +3,13 @@ import React, {Component} from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 
 export default class WordItem extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.word.isMemorized !== this.props.word.isMemorized) {
+      return true;
+    } else {
+      return false;
+    }
+  }
   renderWord = (word) => {
     const {filterMode} = this.props;
     if (filterMode === 'Show_Forgot' && !word.isMemorized) {
@@ -20,15 +27,7 @@ export default class WordItem extends Component {
           </View>
           <View style={styles.containerTouchable}>
             <TouchableOpacity
-              onPress={() => {
-                const newWords = this.state.words.map((item) => {
-                  if (item.id === word.id) {
-                    return {...item, isMemorized: !item.isMemorized};
-                  }
-                  return item;
-                });
-                this.setState({words: newWords});
-              }}
+              onPress={() => this.props.onToggleWord(word)}
               style={{
                 ...styles.touchForgot,
                 backgroundColor: word.isMemorized ? 'green' : 'red',
@@ -56,6 +55,7 @@ export default class WordItem extends Component {
     }
   };
   render() {
+    console.log("item render");
     return this.renderWord(this.props.word);
   }
 }

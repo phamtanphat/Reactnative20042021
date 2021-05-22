@@ -35,12 +35,25 @@ export default class Main extends Component {
   onSetFilterMode = (filterMode) => {
     this.setState({filterMode: filterMode});
   };
+  onToggleWord = (word) => {
+    const newWords = this.state.words.map((item) => {
+      if (item.id === word.id) {
+        return {...item, isMemorized: !item.isMemorized};
+      }
+      return item;
+    });
+    this.setState({words: newWords});
+  };
   render() {
     return (
       <SafeAreaView style={styles.container}>
         <Form onAddWord={this.onAddWord} />
         <Filter onSetFilterMode={this.onSetFilterMode} />
-        <Word words={this.state.words} filterMode={this.state.filterMode} />
+        <Word
+          onToggleWord={this.onToggleWord}
+          words={this.state.words}
+          filterMode={this.state.filterMode}
+        />
       </SafeAreaView>
     );
   }
