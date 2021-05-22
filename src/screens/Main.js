@@ -44,6 +44,16 @@ export default class Main extends Component {
     });
     this.setState({words: newWords});
   };
+  onRemoveWord = (word) => {
+    const newWords = this.state.words.filter((item) => {
+      console.log(word.id, item.id);
+      if (item.id === word.id) {
+        return false;
+      }
+      return true;
+    });
+    this.setState({words: newWords});
+  };
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -51,6 +61,7 @@ export default class Main extends Component {
         <Filter onSetFilterMode={this.onSetFilterMode} />
         <Word
           onToggleWord={this.onToggleWord}
+          onRemoveWord={this.onRemoveWord}
           words={this.state.words}
           filterMode={this.state.filterMode}
         />

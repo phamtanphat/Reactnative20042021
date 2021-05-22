@@ -6,7 +6,8 @@ export default class WordItem extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (
       nextProps.word.isMemorized !== this.props.word.isMemorized ||
-      nextProps.filterMode !== this.props.filterMode
+      nextProps.filterMode !== this.props.filterMode ||
+      nextProps.word.id !== this.props.word.id
     ) {
       return true;
     }
@@ -39,15 +40,7 @@ export default class WordItem extends Component {
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => {
-                const newWords = this.state.words.filter((item) => {
-                  if (item.id === word.id) {
-                    return false;
-                  }
-                  return true;
-                });
-                this.setState({words: newWords});
-              }}
+              onPress={() => this.props.onRemoveWord(word)}
               style={styles.touchRemove}>
               <Text style={styles.textTouchRemove}>Remove</Text>
             </TouchableOpacity>
@@ -57,7 +50,6 @@ export default class WordItem extends Component {
     }
   };
   render() {
-    console.log('item render');
     return this.renderWord(this.props.word);
   }
 }
