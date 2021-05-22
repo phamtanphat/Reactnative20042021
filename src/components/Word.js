@@ -4,30 +4,56 @@ import {Text, View, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 
 export default class Word extends Component {
   renderWord = (word) => {
-    return (
-      <View style={styles.containerWord} key={word.id}>
-        <View style={styles.containerText}>
-          <Text style={styles.textStyleEn}>{word.en}</Text>
-          <Text style={styles.textStyleVn}>
-            {word.isMemorized ? '----' : word.vn}
-          </Text>
-        </View>
-        <View style={styles.containerTouchable}>
-          <TouchableOpacity
-            style={{
-              ...styles.touchForgot,
-              backgroundColor: word.isMemorized ? 'green' : 'red',
-            }}>
-            <Text style={styles.textTouchForgot}>
-              {word.isMemorized ? 'Forgot' : 'Memorized'}
+    const {filterMode} = this.props;
+    if (filterMode === 'Show_Forgot' && !word.isMemorized) {
+      return null;
+    } else if (filterMode === 'Show_Memorized' && word.isMemorized) {
+      return null;
+    } else {
+      return (
+        <View style={styles.containerWord} key={word.id}>
+          <View style={styles.containerText}>
+            <Text style={styles.textStyleEn}>{word.en}</Text>
+            <Text style={styles.textStyleVn}>
+              {word.isMemorized ? '----' : word.vn}
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.touchRemove}>
-            <Text style={styles.textTouchRemove}>Remove</Text>
-          </TouchableOpacity>
+          </View>
+          <View style={styles.containerTouchable}>
+            <TouchableOpacity
+              onPress={() => {
+                const newWords = this.state.words.map((item) => {
+                  if (item.id === word.id) {
+                    return {...item, isMemorized: !item.isMemorized};
+                  }
+                  return item;
+                });
+                this.setState({words: newWords});
+              }}
+              style={{
+                ...styles.touchForgot,
+                backgroundColor: word.isMemorized ? 'green' : 'red',
+              }}>
+              <Text style={styles.textTouchForgot}>
+                {word.isMemorized ? 'Forgot' : 'Memorized'}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                const newWords = this.state.words.filter((item) => {
+                  if (item.id === word.id) {
+                    return false;
+                  }
+                  return true;
+                });
+                this.setState({words: newWords});
+              }}
+              style={styles.touchRemove}>
+              <Text style={styles.textTouchRemove}>Remove</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
-    );
+      );
+    }
   };
   render() {
     return (

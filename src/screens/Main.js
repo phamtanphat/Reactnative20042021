@@ -105,7 +105,7 @@ export default class Main extends Component {
       <SafeAreaView style={styles.container}>
         <Form />
         <Filter filterMode={this.state.filterMode} />
-        <Word words={this.state.words} />
+        <Word words={this.state.words} filterMode={this.state.filterMode} />
       </SafeAreaView>
     );
   }

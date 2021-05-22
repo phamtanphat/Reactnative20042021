@@ -8,6 +8,7 @@ export default class Filter extends Component {
     return (
       <View style={styles.containerPickerStyle}>
         <RNPickerSelect
+          value={this.props.filterMode}
           style={{inputAndroid: {color: 'black'}}}
           onValueChange={(value) => {
             if (Platform.OS === 'android') {
