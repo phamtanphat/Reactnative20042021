@@ -1,18 +1,22 @@
 import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Platform} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 
 export default class Filter extends Component {
-  render() {
-    let value = null;
+  renderFilter = () => {
+    let selectValue = null;
     return (
       <View style={styles.containerPickerStyle}>
         <RNPickerSelect
+          style={{inputAndroid: {color: 'black'}}}
           onValueChange={(value) => {
-            this.value = value;
+            if (Platform.OS === 'android') {
+              this.setState({filterMode: value});
+            }
+            selectValue = value;
           }}
           onDonePress={() => {
-            alert(this.value);
+            this.setState({filterMode: selectValue});
           }}
           items={[
             {label: 'Show All', value: 'Show_All'},
@@ -22,6 +26,9 @@ export default class Filter extends Component {
         />
       </View>
     );
+  };
+  render() {
+    return this.renderFilter(this.props.filterMode);
   }
 }
 

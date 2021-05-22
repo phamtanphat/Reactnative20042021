@@ -6,11 +6,10 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
-  TextInput,
-  Platform,
 } from 'react-native';
-import RNPickerSelect from 'react-native-picker-select';
 import Form from '../components/Form';
+import Filter from '../components/Filter';
+import Word from '../components/Word';
 
 export default class Main extends Component {
   constructor(props) {
@@ -23,9 +22,6 @@ export default class Main extends Component {
         {id: 4, en: 'Four', vn: 'Bốn', isMemorized: true},
         {id: 5, en: 'Five', vn: 'Năm', isMemorized: false},
       ],
-      shouldShowForm: false,
-      txtEn: '',
-      txtVn: '',
       filterMode: null,
     };
   }
@@ -104,38 +100,12 @@ export default class Main extends Component {
     this.txtVnRef.clear();
     this.setState({words: newWords, txtEn: '', txtVn: ''});
   };
-  renderFilter = () => {
-    let selectValue = null;
-    return (
-      <View style={styles.containerPickerStyle}>
-        <RNPickerSelect
-          style={{inputAndroid: {color: 'black'}}}
-          onValueChange={(value) => {
-            if (Platform.OS === 'android') {
-              this.setState({filterMode: value});
-            }
-            selectValue = value;
-          }}
-          onDonePress={() => {
-            this.setState({filterMode: selectValue});
-          }}
-          items={[
-            {label: 'Show All', value: 'Show_All'},
-            {label: 'Show Forgot', value: 'Show_Forgot'},
-            {label: 'Show Memorized', value: 'Show_Memorized'},
-          ]}
-        />
-      </View>
-    );
-  };
   render() {
     return (
       <SafeAreaView style={styles.container}>
         <Form />
-        {this.renderFilter()}
-        {this.state.words.map((word) => {
-          return this.renderWord(word);
-        })}
+        <Filter filterMode={this.state.filterMode} />
+        <Word words={this.state.words} />
       </SafeAreaView>
     );
   }

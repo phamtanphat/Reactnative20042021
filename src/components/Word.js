@@ -3,18 +3,6 @@ import React, {Component} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 
 export default class Word extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      words: [
-        {id: 1, en: 'One', vn: 'Một', isMemorized: false},
-        {id: 2, en: 'Two', vn: 'Hai', isMemorized: false},
-        {id: 3, en: 'Three', vn: 'Ba', isMemorized: true},
-        {id: 4, en: 'Four', vn: 'Bốn', isMemorized: true},
-        {id: 5, en: 'Five', vn: 'Năm', isMemorized: false},
-      ],
-    };
-  }
   renderWord = (word) => {
     return (
       <View style={styles.containerWord} key={word.id}>
@@ -45,7 +33,7 @@ export default class Word extends Component {
     return (
       <View style={styles.container}>
         <FlatList
-          data={this.state.words}
+          data={this.props.words}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({item, index}) => {
             return this.renderWord(item);
@@ -58,7 +46,6 @@ export default class Word extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 20,
   },
   containerWord: {
     marginTop: '2%',
