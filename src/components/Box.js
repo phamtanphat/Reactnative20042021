@@ -2,8 +2,9 @@
 import React, {Component} from 'react';
 import {Text, View} from 'react-native';
 import Child from './Child';
+import {connect} from 'react-redux';
 
-export default class Box extends Component {
+class Box extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,7 +25,7 @@ export default class Box extends Component {
       <View
         style={{flex: 1, flexDirection: 'column', justifyContent: 'center'}}>
         <Text style={{alignSelf: 'center', fontSize: 30}}>
-          Count : {this.state.count}
+          Count : {this.props.count}
         </Text>
         <Child
           onIncrement={this.onIncrement}
@@ -35,3 +36,7 @@ export default class Box extends Component {
     );
   }
 }
+
+export default connect(function (store) {
+  return {count: store.count};
+})(Box);
