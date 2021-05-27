@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Platform} from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
+import {connect} from 'react-redux';
 
-export default class Filter extends Component {
+class Filter extends Component {
   renderFilter = () => {
     let selectValue = null;
     return (
@@ -11,12 +12,15 @@ export default class Filter extends Component {
           style={{inputAndroid: {color: 'black'}}}
           onValueChange={(value) => {
             if (Platform.OS === 'android') {
-              this.props.onSetFilterMode(value);
+              this.props.dispatch({type: 'SET_FILTER_MODE', filterMode: value});
             }
             selectValue = value;
           }}
           onDonePress={() => {
-            this.props.onSetFilterMode(selectValue);
+            this.props.dispatch({
+              type: 'SET_FILTER_MODE',
+              filterMode: selectValue,
+            });
           }}
           items={[
             {label: 'Show All', value: 'Show_All'},
@@ -44,3 +48,5 @@ const styles = StyleSheet.create({
     padding: 50,
   },
 });
+
+export default connect()(Filter);

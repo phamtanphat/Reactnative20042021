@@ -33,6 +33,9 @@ const store = createStore((state = defaultStore, action) => {
     newWords.push(action.newWord);
     return {...state, words: newWords};
   }
+  if (action.type === 'SET_FILTER_MODE') {
+    return {...state, filterMode: action.filterMode};
+  }
   return state;
 });
 
