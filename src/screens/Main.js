@@ -12,19 +12,6 @@ import Filter from '../components/Filter';
 import Word from '../components/Word';
 
 export default class Main extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      words: [
-        {id: 1, en: 'One', vn: 'Một', isMemorized: false},
-        {id: 2, en: 'Two', vn: 'Hai', isMemorized: false},
-        {id: 3, en: 'Three', vn: 'Ba', isMemorized: true},
-        {id: 4, en: 'Four', vn: 'Bốn', isMemorized: true},
-        {id: 5, en: 'Five', vn: 'Năm', isMemorized: false},
-      ],
-      filterMode: null,
-    };
-  }
   onAddWord = (newWord) => {
     const newWords = this.state.words.map((word) => {
       return {...word};
@@ -62,8 +49,6 @@ export default class Main extends Component {
         <Word
           onToggleWord={this.onToggleWord}
           onRemoveWord={this.onRemoveWord}
-          words={this.state.words}
-          filterMode={this.state.filterMode}
         />
       </SafeAreaView>
     );

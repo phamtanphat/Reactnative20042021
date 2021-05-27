@@ -2,8 +2,9 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import WordItem from './WordItem';
+import {connect} from 'react-redux';
 
-export default class Word extends Component {
+class Word extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -30,3 +31,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
+
+const mapStateToProps = (state) => {
+  return {words: state.words, filterMode: state.filterMode};
+};
+
+export default connect(mapStateToProps)(Word);

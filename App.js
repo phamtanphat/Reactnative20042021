@@ -12,10 +12,19 @@ import {Provider} from 'react-redux';
 // store la du lieu duoc nhieu thang su dung toi
 // state : du lieu cua store
 // action : chi  thi de thay doi cua du lieu trong store
-const store = createStore((state = {count: 0}, action) => {
-  if (action.type === 'INCREMENT') {
-    return {...state, count: state.count + 1};
-  }
+
+const defaultStore = {
+  words: [
+    {id: 1, en: 'One', vn: 'Một', isMemorized: false},
+    {id: 2, en: 'Two', vn: 'Hai', isMemorized: false},
+    {id: 3, en: 'Three', vn: 'Ba', isMemorized: true},
+    {id: 4, en: 'Four', vn: 'Bốn', isMemorized: true},
+    {id: 5, en: 'Five', vn: 'Năm', isMemorized: false},
+  ],
+  filterMode: null,
+};
+
+const store = createStore((state = defaultStore, action) => {
   return state;
 });
 
@@ -28,7 +37,7 @@ export default class App extends Component {
         {/* <Filter /> */}
         {/* <Word /> */}
         <Provider store={store}>
-          <Box />
+          <Main />
         </Provider>
       </SafeAreaView>
     );
