@@ -7,12 +7,15 @@ import Form from './src/components/Form';
 import Filter from './src/components/Filter';
 import Word from './src/components/Word';
 import {createStore} from 'redux';
-import { Provider } from 'react-redux';
+import {Provider} from 'react-redux';
 
 // store la du lieu duoc nhieu thang su dung toi
 // state : du lieu cua store
 // action : chi  thi de thay doi cua du lieu trong store
 const store = createStore((state = {count: 0}, action) => {
+  if (action.type === 'INCREMENT') {
+    return {...state, count: state.count + 1};
+  }
   return state;
 });
 

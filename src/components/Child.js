@@ -1,8 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity} from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
 
-export default class Child extends Component {
+class Child extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     return false;
   }
@@ -15,7 +16,7 @@ export default class Child extends Component {
           marginTop: 20,
         }}>
         <TouchableOpacity
-          onPress={() => this.props.onIncrement()}
+          onPress={() => this.props.dispatch({type: 'INCREMENT'})}
           style={{padding: 10, backgroundColor: 'green', borderRadius: 5}}>
           <Text style={{fontSize: 20, color: 'white'}}>Increment</Text>
         </TouchableOpacity>
@@ -33,3 +34,5 @@ export default class Child extends Component {
     );
   }
 }
+
+export default connect()(Child);
