@@ -25,6 +25,14 @@ const defaultStore = {
 };
 
 const store = createStore((state = defaultStore, action) => {
+  if (action.type === 'ADD_WORD') {
+    const newWords = state.words.map((word) => {
+      return {...word};
+    });
+    console.log(action.newWord);
+    newWords.push(action.newWord);
+    return {...state, words: newWords};
+  }
   return state;
 });
 

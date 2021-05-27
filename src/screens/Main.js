@@ -12,13 +12,6 @@ import Filter from '../components/Filter';
 import Word from '../components/Word';
 
 export default class Main extends Component {
-  onAddWord = (newWord) => {
-    const newWords = this.state.words.map((word) => {
-      return {...word};
-    });
-    newWords.push(newWord);
-    this.setState({words: newWords});
-  };
   onSetFilterMode = (filterMode) => {
     this.setState({filterMode: filterMode});
   };
@@ -44,7 +37,7 @@ export default class Main extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <Form onAddWord={this.onAddWord} />
+        <Form />
         <Filter onSetFilterMode={this.onSetFilterMode} />
         <Word
           onToggleWord={this.onToggleWord}

@@ -7,8 +7,9 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import {connect} from 'react-redux';
 
-export default class Form extends Component {
+class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,7 +33,7 @@ export default class Form extends Component {
       vn: txtVn,
       isMemorized: false,
     };
-    this.props.onAddWord(newWord);
+    this.props.dispatch({type: 'ADD_WORD', newWord: newWord});
     this.setState({txtEn: '', txtVn: ''});
     this.txtEnRef.clear();
     this.txtVnRef.clear();
@@ -134,3 +135,5 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+export default connect()(Form);
