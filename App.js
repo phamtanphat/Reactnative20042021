@@ -18,14 +18,24 @@ const defaultWords = [
 ];
 
 function wordReducer(state = defaultWords, action) {
+  if (action.type === 'ADD_WORD') {
+    const newWords = state.map((word) => {
+      return {...word};
+    });
+    newWords.push(action.newWord);
+    return newWords;
+  }
   return state;
 }
 function filterModeReducer(state = null, action) {
+  if (action.type === 'SET_FILTER_MODE') {
+    return action.filterMode;
+  }
   return state;
 }
 const reducer = combineReducers({
   words: wordReducer,
-  filerMode: filterModeReducer,
+  filterMode: filterModeReducer,
 });
 
 const store = createStore(reducer);
@@ -46,17 +56,6 @@ export default class App extends Component {
   }
 }
 
-// if (action.type === 'ADD_WORD') {
-//   const newWords = state.words.map((word) => {
-//     return { ...word };
-//   });
-//   console.log(action.newWord);
-//   newWords.push(action.newWord);
-//   return { ...state, words: newWords };
-// }
-// if (action.type === 'SET_FILTER_MODE') {
-//   return { ...state, filterMode: action.filterMode };
-// }
 // if (action.type === 'TOGGLE_WORD') {
 //   const newWords = state.words.map((item) => {
 //     if (item.id === action.word.id) {
