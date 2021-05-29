@@ -6,56 +6,29 @@ import Box from './src/components/Box';
 import Form from './src/components/Form';
 import Filter from './src/components/Filter';
 import Word from './src/components/Word';
-import {createStore} from 'redux';
+import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
 
-// store la du lieu duoc nhieu thang su dung toi
-// state : du lieu cua store
-// action : chi  thi de thay doi cua du lieu trong store
+const defaultWords = [
+  {id: 1, en: 'One', vn: 'Một', isMemorized: false},
+  {id: 2, en: 'Two', vn: 'Hai', isMemorized: false},
+  {id: 3, en: 'Three', vn: 'Ba', isMemorized: true},
+  {id: 4, en: 'Four', vn: 'Bốn', isMemorized: true},
+  {id: 5, en: 'Five', vn: 'Năm', isMemorized: false},
+];
 
-const defaultStore = {
-  words: [
-    {id: 1, en: 'One', vn: 'Một', isMemorized: false},
-    {id: 2, en: 'Two', vn: 'Hai', isMemorized: false},
-    {id: 3, en: 'Three', vn: 'Ba', isMemorized: true},
-    {id: 4, en: 'Four', vn: 'Bốn', isMemorized: true},
-    {id: 5, en: 'Five', vn: 'Năm', isMemorized: false},
-  ],
-  filterMode: null,
-};
-
-const store = createStore((state = defaultStore, action) => {
-  if (action.type === 'ADD_WORD') {
-    const newWords = state.words.map((word) => {
-      return {...word};
-    });
-    console.log(action.newWord);
-    newWords.push(action.newWord);
-    return {...state, words: newWords};
-  }
-  if (action.type === 'SET_FILTER_MODE') {
-    return {...state, filterMode: action.filterMode};
-  }
-  if (action.type === 'TOGGLE_WORD') {
-    const newWords = state.words.map((item) => {
-      if (item.id === action.word.id) {
-        return {...item, isMemorized: !item.isMemorized};
-      }
-      return item;
-    });
-    return {...state, words: newWords};
-  }
-  if (action.type === 'REMOVE_WORD') {
-    const newWords = state.words.filter((item) => {
-      if (item.id === action.word.id) {
-        return false;
-      }
-      return true;
-    });
-    return {...state, words: newWords};
-  }
+function wordReducer(state = defaultWords, action) {
   return state;
+}
+function filterModeReducer(state = null, action) {
+  return state;
+}
+const reducer = combineReducers({
+  words: wordReducer,
+  filerMode: filterModeReducer,
 });
+
+const store = createStore(reducer);
 
 export default class App extends Component {
   render() {
@@ -72,3 +45,33 @@ export default class App extends Component {
     );
   }
 }
+
+// if (action.type === 'ADD_WORD') {
+//   const newWords = state.words.map((word) => {
+//     return { ...word };
+//   });
+//   console.log(action.newWord);
+//   newWords.push(action.newWord);
+//   return { ...state, words: newWords };
+// }
+// if (action.type === 'SET_FILTER_MODE') {
+//   return { ...state, filterMode: action.filterMode };
+// }
+// if (action.type === 'TOGGLE_WORD') {
+//   const newWords = state.words.map((item) => {
+//     if (item.id === action.word.id) {
+//       return { ...item, isMemorized: !item.isMemorized };
+//     }
+//     return item;
+//   });
+//   return { ...state, words: newWords };
+// }
+// if (action.type === 'REMOVE_WORD') {
+//   const newWords = state.words.filter((item) => {
+//     if (item.id === action.word.id) {
+//       return false;
+//     }
+//     return true;
+//   });
+//   return { ...state, words: newWords };
+// }
