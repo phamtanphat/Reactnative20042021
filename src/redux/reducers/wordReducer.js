@@ -1,3 +1,9 @@
+import {
+  ACTION_TYPE_ADD_WORD,
+  ACTION_TYPE_TOGGLE_WORD,
+  ACTION_TYPE_REMOVE_WORD,
+} from '../actions/index';
+
 const defaultWords = [
   {id: 1, en: 'One', vn: 'Một', isMemorized: false},
   {id: 2, en: 'Two', vn: 'Hai', isMemorized: false},
@@ -7,14 +13,14 @@ const defaultWords = [
 ];
 
 export default function wordReducer(state = defaultWords, action) {
-  if (action.type === 'ADD_WORD') {
+  if (action.type === ACTION_TYPE_ADD_WORD) {
     const newWords = state.map((word) => {
       return {...word};
     });
     newWords.push(action.newWord);
     return newWords;
   }
-  if (action.type === 'TOGGLE_WORD') {
+  if (action.type === ACTION_TYPE_TOGGLE_WORD) {
     const newWords = state.map((item) => {
       if (item.id === action.word.id) {
         return {...item, isMemorized: !item.isMemorized};
@@ -23,7 +29,7 @@ export default function wordReducer(state = defaultWords, action) {
     });
     return newWords;
   }
-  if (action.type === 'REMOVE_WORD') {
+  if (action.type === ACTION_TYPE_REMOVE_WORD) {
     const newWords = state.words.filter((item) => {
       if (item.id === action.word.id) {
         return false;
