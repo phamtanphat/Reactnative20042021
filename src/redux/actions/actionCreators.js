@@ -14,4 +14,11 @@ function setFilterMode(filterMode) {
   return {type: ACTION_TYPE_SET_FILTER_MODE, filterMode};
 }
 
-export { addWord, setFilterMode};
+function toggleWord(word) {
+  return {type: ACTION_TYPE_TOGGLE_WORD, word};
+}
+function removeWord(word) {
+  return {type: ACTION_TYPE_REMOVE_WORD, word};
+}
+
+export { addWord, setFilterMode, toggleWord, removeWord};

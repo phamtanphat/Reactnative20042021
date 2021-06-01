@@ -30,7 +30,7 @@ export default function wordReducer(state = defaultWords, action) {
     return newWords;
   }
   if (action.type === ACTION_TYPE_REMOVE_WORD) {
-    const newWords = state.words.filter((item) => {
+    const newWords = state.filter((item) => {
       if (item.id === action.word.id) {
         return false;
       }
