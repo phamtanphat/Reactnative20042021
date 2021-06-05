@@ -11,9 +11,14 @@ const defaultWords = [
 const word = createSlice({
   name: 'words',
   initialState: defaultWords,
-  reducers: {},
+  reducers: {
+    addWord: (state, action) => {
+      state.push(action.payload);
+      return state;
+    },
+  },
 });
 
 const {reducer, actions} = word;
-export const {toggleWord} = actions;
+export const {addWord} = actions;
 export default reducer;

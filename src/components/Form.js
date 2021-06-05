@@ -7,7 +7,10 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-export default class Form extends Component {
+import {addWord} from '../redux/slices/wordSlice';
+import {connect} from 'react-redux';
+
+class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,6 +36,7 @@ export default class Form extends Component {
     };
     // this.props.dispatch({type: 'ADD_WORD', newWord: newWord});
     // this.props.addWord(newWord);
+    this.props.dispatch(addWord(newWord));
     this.setState({txtEn: '', txtVn: ''});
     this.txtEnRef.clear();
     this.txtVnRef.clear();
@@ -135,3 +139,4 @@ const styles = StyleSheet.create({
   },
 });
 
+export default connect()(Form);
