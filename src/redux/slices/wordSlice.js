@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 import {setLoading} from './loadingSlice';
+import { act } from 'react-test-renderer';
 
 const url = 'https://servernode29122020.herokuapp.com/word';
 
@@ -19,14 +20,31 @@ export const fetchWords = createAsyncThunk(
   },
 );
 
+export const insertWords = createAsyncThunk(
+  '/insert-word',
+  async (params, thunkAPI) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      };
+      thunkAPI.dispatch(setLoading(true));
+      const {en, vn} = params;
+      const response = await axios.post(url, {en, vn}, config);
+      return response.data.words;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    } finally {
+      thunkAPI.dispatch(setLoading(false));
+    }
+  },
+);
+
 const word = createSlice({
   name: 'words',
   initialState: [],
   reducers: {
-    addWord: (state, action) => {
-      state.push(action.payload);
-      return state;
-    },
     toggleWord: (state, action) => {
       for (let i = 0; i < state.length; i++) {
         if (state[i].id === action.payload.id) {
@@ -45,16 +63,16 @@ const word = createSlice({
     },
   },
   extraReducers: {
-    [fetchWords.pending]: (state, action) => {
-      console.log('Pendding');
-    },
     [fetchWords.fulfilled]: (state, action) => action.payload,
-    [fetchWords.rejected]: (state, action) => {
-      console.log('Rejected ---- ', action.payload);
+    [insertWords.fulfilled]: (state, action) => {
+      return state.unshift(action.payload);
     },
+    [insertWords.rejected] : (state,action) => {
+      console.log(action.payload);
+    }
   },
 });
 
 const {reducer, actions} = word;
-export const {addWord, toggleWord, removeWord} = actions;
+export const {toggleWord, removeWord} = actions;
 export default reducer;

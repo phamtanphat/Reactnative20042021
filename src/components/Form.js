@@ -7,7 +7,7 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import {addWord} from '../redux/slices/wordSlice';
+import {insertWords} from '../redux/slices/wordSlice';
 import {connect} from 'react-redux';
 
 class Form extends Component {
@@ -28,15 +28,7 @@ class Form extends Component {
       alert('Bạn chưa nhập đủ thông tin');
       return;
     }
-    const newWord = {
-      id: Math.random(),
-      en: txtEn,
-      vn: txtVn,
-      isMemorized: false,
-    };
-    // this.props.dispatch({type: 'ADD_WORD', newWord: newWord});
-    // this.props.addWord(newWord);
-    this.props.dispatch(addWord(newWord));
+    this.props.dispatch(insertWords({en: txtEn, vn: txtVn}));
     this.setState({txtEn: '', txtVn: ''});
     this.txtEnRef.clear();
     this.txtVnRef.clear();

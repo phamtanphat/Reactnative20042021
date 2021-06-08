@@ -7,7 +7,7 @@ export default class WordItem extends Component {
     if (
       nextProps.word.isMemorized !== this.props.word.isMemorized ||
       nextProps.filterMode !== this.props.filterMode ||
-      nextProps.word.id !== this.props.word.id
+      nextProps.word._id !== this.props.word._id
     ) {
       return true;
     }
@@ -21,7 +21,7 @@ export default class WordItem extends Component {
       return null;
     } else {
       return (
-        <View style={styles.containerWord} key={word.id}>
+        <View style={styles.containerWord} key={word._id}>
           <View style={styles.containerText}>
             <Text style={styles.textStyleEn}>{word.en}</Text>
             <Text style={styles.textStyleVn}>
