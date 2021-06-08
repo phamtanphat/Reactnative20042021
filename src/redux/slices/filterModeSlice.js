@@ -3,9 +3,11 @@ import {createSlice} from '@reduxjs/toolkit';
 const filterMode = createSlice({
   name: 'filterMode',
   initialState: null,
-  reducers: {},
+  reducers: {
+    setFilterMode: (state, action) => action.payload,
+  },
 });
 
 const {reducer, actions} = filterMode;
-// export const { toggleWord } = actions;
+export const {setFilterMode} = actions;
 export default reducer;

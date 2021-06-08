@@ -6,24 +6,31 @@ import {
   StyleSheet,
   View,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import Form from '../components/Form';
 import Filter from '../components/Filter';
 import Word from '../components/Word';
-
-export default class Main extends Component {
+import {fetchWords} from '../redux/slices/wordSlice';
+import {connect} from 'react-redux';
+class Main extends Component {
+  componentDidMount() {
+    this.props.dispatch(fetchWords());
+  }
   render() {
     return (
       <SafeAreaView style={styles.container}>
         <Form />
         <Filter />
-        <Word />
+        {this.props.loading ? (
+          <ActivityIndicator size="large" color="blue" />
+        ) : (
+          <Word />
+        )}
       </SafeAreaView>
     );
   }
 }
-// ismemorized : Forgot - màu xanh
-// isMemorized == false : Memorized - màu đỏ
 
 const styles = StyleSheet.create({
   container: {
@@ -87,3 +94,9 @@ const styles = StyleSheet.create({
     padding: 50,
   },
 });
+
+const mapStateToProps = (state) => {
+  return {loading: state.loading};
+};
+
+export default connect(mapStateToProps)(Main);
