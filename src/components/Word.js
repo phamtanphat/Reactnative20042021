@@ -3,12 +3,13 @@ import React, {Component} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import WordItem from './WordItem';
 import {connect} from 'react-redux';
+import {toggleWord, removeWord} from '../redux/slices/wordSlice';
 class Word extends Component {
   onToggleWord = (word) => {
-    // this.props.toggleWord(word);
+    this.props.dispatch(toggleWord(word));
   };
   onRemoveWord = (word) => {
-    // this.props.removeWord(word);
+    this.props.dispatch(removeWord(word));
   };
   render() {
     return (
