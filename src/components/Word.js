@@ -3,13 +3,15 @@ import React, {Component} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import WordItem from './WordItem';
 import {connect} from 'react-redux';
-import {toggleWord, removeWord} from '../redux/slices/wordSlice';
+import {toggleWords, deleteWords} from '../redux/slices/wordSlice';
 class Word extends Component {
   onToggleWord = (word) => {
-    this.props.dispatch(toggleWord(word));
+    this.props.dispatch(
+      toggleWords({_id: word._id, isMemorized: !word.isMemorized}),
+    );
   };
   onRemoveWord = (word) => {
-    this.props.dispatch(removeWord(word));
+    this.props.dispatch(deleteWords(word._id));
   };
   render() {
     return (
